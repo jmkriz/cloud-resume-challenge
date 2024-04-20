@@ -1,0 +1,8 @@
+{
+  "id": {
+    "S": "visitors"
+  },
+  "visitor_count": {
+    "N": "0"
+  }
+}

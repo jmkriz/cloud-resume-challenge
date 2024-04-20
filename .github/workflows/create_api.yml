@@ -33,4 +33,4 @@ jobs:
       run: terraform -chdir="./terraform" apply -auto-approve -input=false
     - name: Create Visitor Count
       continue-on-error: true
-      run: aws dynamodb put-item --table-name resume --item "{ \"id\": {\"S\": \"visitors\"}, \"visitor_count\": {\"N\": \"0\"}}" --condition-expression "attribute_not_exists(id)"
+      run: aws dynamodb put-item --table-name resume --item file://db-items/visitor-count.json --condition-expression "attribute_not_exists(id)"
