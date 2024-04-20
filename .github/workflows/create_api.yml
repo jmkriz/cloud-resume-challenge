@@ -1,0 +1,33 @@
+name: Create API
+
+on:
+  workflow_run:
+    workflows: ["CodeQL"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  apply_terraform:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions: 
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::975050131473:role/Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+    - name: Terraform Init
+      run: terraform -chdir="./terraform" init
+    - name: Terraform Format
+      run: terraform -chdir="./terraform" fmt -check
+    - name: Terraform Plan
+      run: terraform -chdir="./terraform" plan -input=false
+    - name: Terraform Apply
+      run: terraform -chdir="./terraform" apply -auto-approve -input=false
