@@ -21,11 +21,11 @@ provider "aws" {
 
 resource "aws_dynamodb_table" "resume_visitor_count" {
   billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "name"
-  name         = "resume-visitor-count"
+  hash_key     = "id"
+  name         = "resume"
 
   attribute {
-    name = "name"
+    name = "id"
     type = "S"
   }
 }
