@@ -35,6 +35,10 @@ def fortytwo_table(dummy_table):
 
 def test_zero(zero_table):
     assert visitor_counter.get_visitor_count(zero_table) == 0
+    visitor_counter.increment_visitor_count(zero_table)
+    assert visitor_counter.get_visitor_count(zero_table) == 1
 
 def test_fortytwo(fortytwo_table):
     assert visitor_counter.get_visitor_count(fortytwo_table) == 42
+    visitor_counter.increment_visitor_count(fortytwo_table)
+    assert visitor_counter.get_visitor_count(fortytwo_table) == 43
