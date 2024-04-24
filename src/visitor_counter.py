@@ -5,7 +5,7 @@ def get_visitor_count(db_table):
 def increment_visitor_count(db_table):
     update_expression = 'SET visitor_count = visitor_count + :one'
     eav = {':one': 1}
-    response = db_table.update_item(TableName='resume', Key={'id': 'visitors'},
+    response = db_table.update_item(Key={'id': 'visitors'},
                                     UpdateExpression=update_expression,
                                     ExpressionAttributeValues=eav)
     return response
