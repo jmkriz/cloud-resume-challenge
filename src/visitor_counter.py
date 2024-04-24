@@ -1,6 +1,6 @@
 def get_visitor_count(db_table):
-    count = db_table.get_item(Key={'id': 'visitors'})['Item']['visitor_count']
-    return int(count)
+    response =  db_table.get_item(Key={'id': 'visitors'})
+    return response
 
 def increment_visitor_count(db_table):
     update_expression = 'SET visitor_count = visitor_count + :one'
@@ -8,4 +8,4 @@ def increment_visitor_count(db_table):
     response = db_table.update_item(TableName='resume', Key={'id': 'visitors'},
                                     UpdateExpression=update_expression,
                                     ExpressionAttributeValues=eav)
-    return response['ResponseMetadata']['HTTPStatusCode']
+    return response

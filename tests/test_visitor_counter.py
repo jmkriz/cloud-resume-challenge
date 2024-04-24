@@ -34,11 +34,11 @@ def fortytwo_table(dummy_table):
     yield table
 
 def test_zero(zero_table):
-    assert visitor_counter.get_visitor_count(zero_table) == 0
+    assert int(visitor_counter.get_visitor_count(zero_table)['Item']['visitor_count']) == 0
     visitor_counter.increment_visitor_count(zero_table)
-    assert visitor_counter.get_visitor_count(zero_table) == 1
+    assert int(visitor_counter.get_visitor_count(zero_table)['Item']['visitor_count']) == 1
 
 def test_fortytwo(fortytwo_table):
-    assert visitor_counter.get_visitor_count(fortytwo_table) == 42
+    assert int(visitor_counter.get_visitor_count(fortytwo_table)['Item']['visitor_count']) == 42
     visitor_counter.increment_visitor_count(fortytwo_table)
-    assert visitor_counter.get_visitor_count(fortytwo_table) == 43
+    assert int(visitor_counter.get_visitor_count(fortytwo_table)['Item']['visitor_count']) == 43
