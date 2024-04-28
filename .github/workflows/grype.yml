@@ -1,0 +1,24 @@
+name: "Grype"
+
+on:
+  workflow_run:
+    workflows: ["CodeQL"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  syft_grype:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+    - name: Generate SBOM
+      uses: anchore/sbom-action@v0
+      with:
+        format: spdx-json
+        output-file: "${{ github.event.repository.name }}-sbom.spdx.json"
+    - name: Scan with Grype
+      uses: anchore/scan-action@v3
+      with:
+        sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
