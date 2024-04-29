@@ -10,7 +10,7 @@ def lambda_handler(event, context):
             'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
             'body': response['Item']['visitor_count'] if 'Item' in response and 'visitor_count' in response['Item'] else None
         }
-    if event["httpMethod"] == 'PUSH':
+    if event["httpMethod"] == 'POST':
         response = increment_visitor_count(table)
         return {
             'statusCode': response['ResponseMetadata']['HTTPStatusCode']

@@ -46,34 +46,34 @@ def dummy_table(dummy_dynamodb_client, **kwargs):
 def test_zero(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] == 0
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 200
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 200
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] == 1
 
 def test_fortytwo(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client, count_value = 42):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] == 42
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 200
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 200
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] == 43
 
 def test_no_table(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client, table_name = 'test'):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['statusCode'] == 400
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 400
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 400
 
 def test_wrong_key(dummy_dynamodb_client):
      with dummy_table(dummy_dynamodb_client, table_key = 'test'):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['statusCode'] == 400
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 400
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 400
 
 def test_wrong_key_value(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client, key_value = 'test'):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] is None
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 400
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 400
 
 def test_wrong_count_column_name(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client, count_name = 'test'):
         assert visitor_counter.lambda_handler({'httpMethod': 'GET'}, None)['body'] is None
-        assert visitor_counter.lambda_handler({'httpMethod': 'PUSH'}, None)['statusCode'] == 400
+        assert visitor_counter.lambda_handler({'httpMethod': 'POST'}, None)['statusCode'] == 400
 
 def test_method_not_allowed(dummy_dynamodb_client):
     with dummy_table(dummy_dynamodb_client):
