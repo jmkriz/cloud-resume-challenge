@@ -2,7 +2,7 @@ name: Create API
 
 on:
   workflow_run:
-    workflows: ["Grype"]
+    workflows: ["Pytest"]
     types: [completed]
     branches: [main]
 
