@@ -8,12 +8,20 @@ def lambda_handler(event, context):
         response = get_visitor_count(table)
         return {
             'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': True
+            },
             'body': response['Item']['visitor_count'] if 'Item' in response and 'visitor_count' in response['Item'] else None
         }
     if event["httpMethod"] == 'POST':
         response = increment_visitor_count(table)
         return {
-            'statusCode': response['ResponseMetadata']['HTTPStatusCode']
+            'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': True
+            }
         }
     # 405: Method Not Allowed
     return {
