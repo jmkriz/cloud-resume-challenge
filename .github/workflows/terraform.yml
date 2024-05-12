@@ -1,4 +1,4 @@
-name: Create API
+name: Terraform
 
 on:
   workflow_run:
@@ -34,3 +34,5 @@ jobs:
     - name: Create Visitor Count
       continue-on-error: true
       run: aws dynamodb put-item --table-name resume --item file://db-items/visitor-count.json --condition-expression "attribute_not_exists(id)"
+    - name: Deploy files
+      run: aws s3 sync ./frontend s3://jmkriz-frontend --delete

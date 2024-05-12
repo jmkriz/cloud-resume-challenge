@@ -216,3 +216,47 @@ resource "aws_api_gateway_stage" "visitor_counter_stage" {
   rest_api_id   = aws_api_gateway_rest_api.visitor_counter.id
   stage_name    = "visitor_counter"
 }
+
+# S3 Website
+resource "aws_s3_bucket" "bucket" {
+  bucket = "jmkriz-frontend"
+}
+
+resource "aws_s3_bucket_public_access_block" "public-access-block" {
+  bucket                  = aws_s3_bucket.bucket.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_policy" "policy" {
+  bucket = aws_s3_bucket.bucket.id
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Sid" : "PublicReadGetObject",
+          "Effect" : "Allow",
+          "Principal" : "*",
+          "Action" : "s3:GetObject",
+          "Resource" : "arn:aws:s3:::${aws_s3_bucket.bucket.id}/*"
+        }
+      ]
+    }
+  )
+
+  # Require public access blocks be removed before applying policy
+  depends_on = [
+    aws_s3_bucket_public_access_block.public-access-block
+  ]
+}
+
+resource "aws_s3_bucket_website_configuration" "front_end" {
+  bucket = aws_s3_bucket.bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+}

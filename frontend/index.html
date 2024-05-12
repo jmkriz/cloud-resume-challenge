@@ -1,0 +1,68 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+        <title>Resume Title</title>
+    </head>
+    <body>
+      <h1>First Last</h1>
+      <h2>Contact info</h2>
+      <p>----------------</p>
+      <h2>Experience</h2>
+      <h3>Company 1</h3>
+      <h4>Job 1</h4>
+      <h4>Start date - Present</h4>
+      <ul>
+        <li>Thing I did</li>
+        <li>Thing I did</li>
+        <li>Thing I did</li>
+      </ul>
+      <h4>Job 2</h4>
+      <h4>Start date - End date</h4>
+      <ul>
+        <li>Thing I did</li>
+        <li>Thing I did</li>
+      </ul>
+      <h3>Company 2</h3>
+      <h4>Job 1</h4>
+      <h4>Start date - End date</h4>
+      <ul>
+        <li>Thing I did</li>
+        <li>Thing I did</li>
+      </ul>
+      <h4>Job 2</h4>
+      <h4>Start date - End date</h4>
+      <ul>
+        <li>Thing I did</li>
+      </ul>
+      <h2>Education</h2>
+      <h3>University</h3>
+      <h3>City, State</h3>
+      <h4>Degree</h4>
+      <h4>Start date - End date</h4>
+      <h2>Projects</h2>
+      <h3>This Resume!</h3>
+      <p>Description of the project</p>
+      <h2>Certifications</h2>
+      <ul>
+        <li>Cert 1</li>
+        <li>Cert 2</li>
+        <li>Cert 3</li>
+      </ul>
+      <p>
+        You are the
+        <p id="visitor_count">0</p>
+        th visitor!
+      </p>
+      <script>
+        const visitorCount = document.getElementById("visitor_count");
+        const apiUrl = 'https://4iajh7jaqf.execute-api.us-east-1.amazonaws.com/visitor_counter/visitorcount';
+        fetch(apiUrl, {
+            method: "POST"
+        });
+        const getResponse = fetch(apiUrl)
+		.then(response=>response.text())
+		.then(responseText=>visitorCount.innerHTML = responseText);
+      </script>
+    </body>
+</html>
