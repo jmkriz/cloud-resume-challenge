@@ -263,13 +263,13 @@ resource "aws_s3_bucket_website_configuration" "front_end" {
 
 resource "aws_s3_object" "index" {
   bucket = aws_s3_bucket.bucket.bucket
-  key = "index.html"
+  key    = "index.html"
   source = "frontend/index.html"
 }
 
 resource "aws_s3_object" "styles" {
   bucket = aws_s3_bucket.bucket.bucket
-  key = "styles.css"
+  key    = "styles.css"
   source = "frontend/styles.css"
 }
 
@@ -282,9 +282,9 @@ locals {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name       = local.custom_domain_name
+  domain_name               = local.custom_domain_name
   subject_alternative_names = ["www.${local.custom_domain_name}", "api.${local.custom_domain_name}"]
-  validation_method = "DNS"
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true
@@ -323,11 +323,6 @@ resource "aws_cloudfront_distribution" "frontend_distribution" {
     origin_id   = local.s3_origin_id
   }
 
-  /* origin {
-    domain_name = aws_api_gateway_stage.visitor_counter_stage.invoke_url
-    origin_id   = local.api_origin_id
-  } */
-
   default_cache_behavior {
     allowed_methods  = ["HEAD", "GET", "OPTIONS"]
     cached_methods   = ["HEAD", "GET", "OPTIONS"]
@@ -347,27 +342,6 @@ resource "aws_cloudfront_distribution" "frontend_distribution" {
     max_ttl                = 86400
   }
 
-  /* ordered_cache_behavior {
-    path_pattern     = "/api/*"
-    allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
-    cached_methods   = ["HEAD", "GET", "OPTIONS"
-    target_origin_id = local.api_origin_id
-
-    forwarded_values {
-      query_string = false
-      headers      = ["Origin"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 360
-    max_ttl                = 3600
-  } */
-
   restrictions {
     geo_restriction {
       locations        = []
@@ -376,10 +350,10 @@ resource "aws_cloudfront_distribution" "frontend_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.cert.arn
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
     cloudfront_default_certificate = false
-    minimum_protocol_version = "TLSv1.2_2021"
-    ssl_support_method = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    ssl_support_method             = "sni-only"
   }
 
   enabled             = true
@@ -391,47 +365,47 @@ resource "aws_cloudfront_distribution" "frontend_distribution" {
 
 resource "aws_api_gateway_domain_name" "api" {
   certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
-  domain_name = "api.${local.custom_domain_name}"
+  domain_name     = "api.${local.custom_domain_name}"
 }
 
 resource "aws_api_gateway_base_path_mapping" "api_mapping" {
-  api_id = aws_api_gateway_rest_api.visitor_counter.id
-  stage_name = aws_api_gateway_stage.visitor_counter_stage.stage_name
+  api_id      = aws_api_gateway_rest_api.visitor_counter.id
+  stage_name  = aws_api_gateway_stage.visitor_counter_stage.stage_name
   domain_name = aws_api_gateway_domain_name.api.domain_name
 }
 
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.frontend_zone.zone_id
-  name = "www.${local.custom_domain_name}"
-  type = "A"
+  name    = "www.${local.custom_domain_name}"
+  type    = "A"
 
   alias {
-    name = aws_cloudfront_distribution.frontend_distribution.domain_name
-    zone_id = aws_cloudfront_distribution.frontend_distribution.hosted_zone_id
+    name                   = aws_cloudfront_distribution.frontend_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.frontend_distribution.hosted_zone_id
     evaluate_target_health = true
   }
 }
 
 resource "aws_route53_record" "root" {
   zone_id = aws_route53_zone.frontend_zone.zone_id
-  name = local.custom_domain_name
-  type = "A"
+  name    = local.custom_domain_name
+  type    = "A"
 
   alias {
-    name = aws_route53_record.www.name
-    zone_id = aws_route53_record.www.zone_id
+    name                   = aws_route53_record.www.name
+    zone_id                = aws_route53_record.www.zone_id
     evaluate_target_health = true
   }
 }
 
 resource "aws_route53_record" "api" {
   zone_id = aws_route53_zone.frontend_zone.zone_id
-  name = aws_api_gateway_domain_name.api.domain_name
-  type = "A"
+  name    = aws_api_gateway_domain_name.api.domain_name
+  type    = "A"
 
   alias {
-    name = aws_api_gateway_domain_name.api.cloudfront_domain_name
-    zone_id = aws_api_gateway_domain_name.api.cloudfront_zone_id
+    name                   = aws_api_gateway_domain_name.api.cloudfront_domain_name
+    zone_id                = aws_api_gateway_domain_name.api.cloudfront_zone_id
     evaluate_target_health = true
   }
 }
