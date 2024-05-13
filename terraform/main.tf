@@ -262,15 +262,21 @@ resource "aws_s3_bucket_website_configuration" "front_end" {
 }
 
 resource "aws_s3_object" "index" {
-  bucket = aws_s3_bucket.bucket.bucket
-  key    = "index.html"
-  source = "../frontend/index.html"
+  bucket       = aws_s3_bucket.bucket.bucket
+  key          = "index.html"
+  source       = "../frontend/index.html"
+  content_type = "text/html"
+
+  etag = filemd5("../frontend/index.html")
 }
 
 resource "aws_s3_object" "styles" {
-  bucket = aws_s3_bucket.bucket.bucket
-  key    = "styles.css"
-  source = "../frontend/styles.css"
+  bucket       = aws_s3_bucket.bucket.bucket
+  key          = "styles.css"
+  source       = "../frontend/styles.css"
+  content_type = "text/css"
+
+  etag = filemd5("../frontend/styles.css")
 }
 
 # CloudFront distribution and DNS
