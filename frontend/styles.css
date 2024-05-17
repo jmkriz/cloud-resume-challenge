@@ -1,7 +1,37 @@
-h1, h2, h3, h4, p {
+body {
+    align-content: center;
+    background-image: linear-gradient(165deg, blue, yellow);
+}
+
+.sheet {
+    background-color: white;
+    margin: 30px;
+    padding: 30px;
+}
+
+a, h1, h2, h3, h4, p {
     font-family: "Garamond", "Times New Roman", serif;
 }
 
 h1 {
     font-size: 42;
+}
+
+td {
+}
+
+tr {
+    vertical-align: top;
+}
+
+.eventual_image {
+    width: 200px;
+    height: 200px;
+    background: rebeccapurple;
+}
+
+.eventual_icon {
+    width: 16px;
+    height: 16px;
+    background: rebeccapurple;
 }
