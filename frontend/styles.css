@@ -1,12 +1,17 @@
 body {
     align-content: center;
+    background-attachment: fixed;
     background-image: linear-gradient(165deg, blue, yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sheet {
     background-color: white;
     margin: 30px;
     padding: 30px;
+    max-width: 1200px;
 }
 
 .divider {
