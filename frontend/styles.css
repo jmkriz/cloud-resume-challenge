@@ -9,19 +9,55 @@ body {
     padding: 30px;
 }
 
+.divider {
+    align-content: end;
+}
+
 a, h1, h2, h3, h4, p {
     font-family: "Garamond", "Times New Roman", serif;
 }
 
 h1 {
-    font-size: 42;
+    font-size: 2em;
 }
 
-td {
+h2 {
+    font-size: 1.5em;
+    margin-top: 1.17em;
+    margin-bottom: .5em;
+}
+
+h2, hr, .date {
+    color: darkblue;
+}
+
+h3, h4, ul {
+    margin-top: 0em;
+    margin-bottom: .67em;
+}
+
+hr {
+    border: 0px;
+    border-bottom: 2px solid darkblue;
+    margin-top: 1.67em;
+    text-align: right;
+}
+
+hr::after {
+    content: "█";
 }
 
 tr {
     vertical-align: top;
+}
+
+td:first-child {
+    text-align: right;
+    white-space: nowrap;
+}
+
+td {
+    padding-right: 16px;
 }
 
 .eventual_image {
