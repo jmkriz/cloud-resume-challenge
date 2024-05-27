@@ -19,6 +19,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+locals {
+  top = "${path.root}/.."
+}
+
 # DynamoDB table for visitor count
 resource "aws_dynamodb_table" "resume_visitor_count" {
   billing_mode = "PAY_PER_REQUEST"
@@ -264,19 +268,41 @@ resource "aws_s3_bucket_website_configuration" "front_end" {
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.bucket.bucket
   key          = "index.html"
-  source       = "../frontend/index.html"
+  source       = "${local.top}/frontend/index.html"
   content_type = "text/html"
 
-  etag = filemd5("../frontend/index.html")
+  etag = filemd5("${local.top}/frontend/index.html")
 }
 
 resource "aws_s3_object" "styles" {
   bucket       = aws_s3_bucket.bucket.bucket
   key          = "styles.css"
-  source       = "../frontend/styles.css"
+  source       = "${local.top}/frontend/styles.css"
   content_type = "text/css"
 
-  etag = filemd5("../frontend/styles.css")
+  etag = filemd5("${local.top}/frontend/styles.css")
+}
+
+resource "aws_s3_object" "svg_images" {
+  for_each = fileset("${local.top}/frontend/images", "*.svg")
+
+  bucket       = aws_s3_bucket.bucket.bucket
+  key          = "images/${each.value}"
+  source       = "${local.top}/frontend/images/${each.value}"
+  content_type = "image/svg+xml"
+
+  etag = filemd5("${local.top}/frontend/images/${each.value}")
+}
+
+resource "aws_s3_object" "jpg_images" {
+  for_each = fileset("${local.top}/frontend/images", "*.jpg")
+
+  bucket       = aws_s3_bucket.bucket.bucket
+  key          = "images/${each.value}"
+  source       = "${local.top}/frontend/images/${each.value}"
+  content_type = "image/jpeg"
+
+  etag = filemd5("${local.top}/frontend/images/${each.value}")
 }
 
 # CloudFront distribution and DNS
