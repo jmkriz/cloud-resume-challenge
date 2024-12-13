@@ -265,13 +265,15 @@ resource "aws_s3_bucket_website_configuration" "front_end" {
   }
 }
 
-resource "aws_s3_object" "index" {
+resource "aws_s3_object" "html_pages" {
+  for_each = fileset("${local.top}/frontend", "*.html")
+
   bucket       = aws_s3_bucket.bucket.bucket
-  key          = "index.html"
-  source       = "${local.top}/frontend/index.html"
+  key          = "${each.value}"
+  source       = "${local.top}/frontend/${each.value}"
   content_type = "text/html"
 
-  etag = filemd5("${local.top}/frontend/index.html")
+  etag = filemd5("${local.top}/frontend/${each.value}")
 }
 
 resource "aws_s3_object" "styles" {
