@@ -269,7 +269,7 @@ resource "aws_s3_object" "html_pages" {
   for_each = fileset("${local.top}/frontend", "*.html")
 
   bucket       = aws_s3_bucket.bucket.bucket
-  key          = "${each.value}"
+  key          = each.value
   source       = "${local.top}/frontend/${each.value}"
   content_type = "text/html"
 
