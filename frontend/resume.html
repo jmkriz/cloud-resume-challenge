@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Michael Kriz</title>
+  </head>
+  <body>
+    <table class="sheet">
+      <tr>
+        <td><h2>Personal Information</h2></td>
+        <td><h1>Michael Kriz</h1></td>
+      </tr>
+      <tr>
+        <td><img class="portrait" src=images/portrait.jpg alt="Picture of Michael Kriz"></img></div></td>
+        <td>
+          <table>
+            <tr>
+              <td><img class="icon" src=images/map-pin.svg alt="Location"></img></td>
+              <td>Lexington Park, MD, USA (Open to relocation)</td>
+            </tr>
+            <tr>
+              <td><img class="icon" src=images/mail.svg alt="Email"></img></td>
+              <td><a href="mailto:john.michael.kriz@gmail.com">john.michael.kriz@gmail.com</a></td>
+            </tr>
+            <tr>
+              <td><img class="icon" src=images/linkedin.svg alt="LinkedIn"></img></td>
+              <td><a href="https://www.linkedin.com/in/john-michael-kriz/">LinkedIn</a></td>
+            </tr>
+            <tr>
+              <td><img class="icon" src=images/github.svg alt="GitHub"></img></td>
+              <td><a href="https://github.com/jmkriz">GitHub</a></td>
+            </tr>
+            <tr>
+              <td><img class="icon" src=images/group.svg alt="Visitors"></img></td>
+              <td>Site visitors: <span id=visitor_count>-</span></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td><h2>Experience</h2></td>
+        <td><hr/></td>
+      </tr>
+      <tr>
+        <td><h3 class="date">Aug 2022 - Present</h3></td>
+        <td>
+          <h3>SOC Analyst</h3>
+          <h4>RMC Inc.</h4>
+          <ul>
+            <li>Deployed QRadar on several RHEL Linux servers, and configured them to meet baseline security requirements set by the Department of Defense</li>
+            <li>Created a virtualized testing environment in Proxmox for testing new security configurations before deploying them into production</li>
+            <li>Wrote a Python script to automate the import of threat intelligence directly into our SIEM via its REST API</li>
+            <li>Wrote a Python script to automate the import of threat intelligence directly into our SIEM via its REST API</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><h3 class="date">Mar 2021 - Feb 2022</h3></td>
+        <td>
+          <h3>System Administrator</h3>
+          <h4>RMC Inc.</h4>
+          <ul>
+            <li>Reduced the time needed to complete security checklists before a re-accreditation deadline by writing a Python script that automated part of the process of editing them</li>
+            <li>Rescued data from failing hard drives using Linux command line tools, and documented the process of doing this so that other members of the team could repeat it in the future</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><h3 class="date">Oct 2019 - Mar 2021</h3></td>
+        <td>
+          <h3>Junior Cybersecurity Analyst</h3>
+          <h4>The MIL Corporation</h4>
+          <ul>
+            <li>Participated in the NIST RMF process by assisting with selecting, applying, and monitoring security controls for systems using Windows, Linux, and Solaris systems</li>
+            <li>Managed vulnerabilities for a RHEL Linux lab by regularly running Tenable Nessus scans and patching out of date software</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><h3 class="date">Feb 2019 - Oct 2019</h3></td>
+        <td>
+          <h3>Junior System Administrator</h3>
+          <h4>The MIL Corporation</h4>
+          <ul>
+            <li>Provisioned workstations and user accounts</li>
+            <li>Troubleshooted issues reported by users</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><h2>Education</h2></td>
+        <td><hr/></td>
+      </tr>
+      <tr>
+        <td><h3 class="date">Aug 2013 - May 2017</h3></td>
+        <td>
+          <h3>Bachelor of Science: Computer Science</h3>
+          <h4>West Virginia University</h4>
+        </td>
+      </tr>
+      <tr>
+        <td><h2>Projects</h2></td>
+        <td><hr/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <h3>The Cloud Resume Challenge</h3>
+          <h4><a href="https://github.com/jmkriz/cloud-resume-challenge">GitHub Page</a> | <a href="https://dev.to/jmkriz/the-cloud-resume-challenge-19d5">Blog Post</a></h4>
+          <ul>
+            <li>Hosted a static website on AWS using services such as S3, CloudFront, Route 53, and Lambda, and provisioned all of these services with Terraform</li>
+            <li>Implemented and wrote tests for a simple REST API in Python</li>
+            <li>Managed changes to the code with Git, and used GitHub Actions to automatically scan my code for vulnerabilities, run my tests, and deploy it to the cloud whenever I update anything</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><h2>Certifications</h2></td>
+        <td><hr/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><h3>CISSP, Security+, AWS Certified Cloud Practitioner</h3></td>
+      </tr>
+      <script>
+        const visitorCount = document.getElementById("visitor_count");
+        const apiUrl = 'https://api.jmkriz.dev/visitorcount';
+        const getResponse = fetch(apiUrl)
+              .then(response=>response.text())
+              .then(responseText=>visitorCount.innerHTML = responseText);
+        fetch(apiUrl, {
+            method: "POST"
+        });
+      </script>
+    </table>
+  </body>
+</html>
